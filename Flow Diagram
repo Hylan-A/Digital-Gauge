@@ -1,0 +1,37 @@
+ ┌──────────────────────────────────────────────┐
+ │                ESP32 BOOT                    │
+ └───────────────────────────┬──────────────────┘
+                             ▼
+                 Initialize Hardware
+                 • GC9A01A Display  
+                 • Pressure Sensor (ADC)  
+                 • Wi‑Fi Credentials  
+                 • MQTT Client        
+                 • ArduinoOTA         
+                             ▼
+                 Draw Static Gauge Elements
+                 • Arc, ticks, labels  
+                             ▼
+ ┌──────────────────────────────────────────────┐
+ │                  MAIN LOOP                   │
+ └───────────────────────────┬──────────────────┘
+                             ▼
+                 Handle OTA Updates
+                 • ArduinoOTA.handle() always active  
+                             ▼
+                 Maintain MQTT Connection
+                 • Reconnect if needed  
+                 • Publish PSI → shop/pressure  
+                             ▼
+                 Read Pressure Sensor
+                 • Take 64 ADC samples  
+                 • Average samples
+                             ▼
+                 Convert ADC → PSI
+                 • Use calibration points  
+                             ▼
+                 Update Gauge Display
+                 • Draw needle  
+                 • Draw numeric PSI  
+                             ▼
+                 Loop Delay / Repeat

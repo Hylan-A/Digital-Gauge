@@ -1,0 +1,46 @@
+ ┌──────────────────────────────────────────────────────────┐
+ │                        ESP32 MCU                         │
+ │                                                          │
+ │  ┌────────────────────────────────────────────────────┐  │
+ │  │                  Firmware Modules                  │  │
+ │  │                                                    │  │
+ │  │  • ADC Sampling (64-sample average)                │  │  ← Pressure readout
+ │  │    (from analog pressure sensor)                   │  │    
+ │  │  • PSI Conversion (calibration points)             │  │
+ │  │  • Gauge Rendering                                 │  │
+ │  │      - Needle                                      │  │
+ │  │      - Numeric PSI                                 │  │
+ │  │      - Arc, ticks, labels (0–100 PSI)              │  │    
+ │  │  • MQTT Publishing (shop/pressure)                 │  │    
+ │  │  • OTA Handler (ArduinoOTA)                        │  │    
+ │  └────────────────────────────────────────────────────┘  │
+ └──────────────────────────────────────────────────────────┘
+                ▲                         ▲
+                │                         │
+                │                         │
+     ┌──────────────────┐       ┌──────────────────────────┐
+     │ Pressure Sensor  │       │ GC9A01A Round TFT Display│
+     │ (Analog Input)   │       │ (Gauge UI Output)        │
+     └──────────────────┘       └──────────────────────────┘
+                │                         ▲
+                │                         │
+                ▼                         │
+         ADC Input (sensorPin)            │
+                                          ▼
+                               Gauge Rendering Output
+                               (Needle + Numeric PSI)
+
+ ┌──────────────────────────────────────────────────────────┐
+ │                        Connectivity                      │
+ │                                                          │
+ │   ┌───────────────────────────┐   ┌────────────────────┐ │
+ │   │        Wi‑Fi Stack        │   │     MQTT Broker     │ │
+ │   │ (SSID/PW hard‑coded)      │   │ Publishes PSI to    │ │
+ │   │                           │   │   shop/pressure     │ │
+ │   └───────────────────────────┘   └────────────────────┘ │
+ │                                                          │
+ │   ┌───────────────────────────┐                          │
+ │   │        OTA Updates        │                          │
+ │   │ (ArduinoOTA always active)│                          │
+ │   └───────────────────────────┘                          │
+ └──────────────────────────────────────────────────────────┘
